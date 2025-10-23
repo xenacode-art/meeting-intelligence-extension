@@ -192,30 +192,6 @@ This extension showcases **all major Chrome Built-in AI APIs**:
 ✅ **Offline**: Works without internet connection
 ✅ **Reliability**: No network latency or server downtime
 
----
-
-## 🏆 Hackathon Prize Categories
-
-This extension is eligible for multiple prize categories in the **Google Chrome Built-in AI Challenge 2025**:
-
-### 🎯 **Most Helpful - Chrome Extension** ($14,000)
-- Solves a real, everyday problem (meeting fatigue & information loss)
-- Provides immediate, practical value to users
-- Intuitive, polished user experience
-
-### 🎨 **Best Multimodal AI Application** ($9,000)
-- Utilizes Prompt API's **new multimodal audio input** capability
-- Demonstrates innovative use of audio → text processing
-- Showcases the power of on-device multimodal AI
-
-### ☁️ **Best Hybrid AI Application** ($9,000)
-- Combines client-side AI (transcription, summarization) with optional cloud sync
-- Demonstrates intelligent hybrid architecture:
-  - Sensitive processing stays local (transcription)
-  - Optional cloud features (team sharing via Firebase)
-- Shows when to use local vs. cloud AI
-
----
 
 ## 🔐 Privacy & Security
 
