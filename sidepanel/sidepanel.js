@@ -18,6 +18,9 @@ class MeetingIntelligenceUI {
   }
 
   setupEventListeners() {
+    // Demo mode
+    document.getElementById('loadSampleBtn').addEventListener('click', () => this.loadSampleTranscript());
+
     // Recording controls
     document.getElementById('startRecordingBtn').addEventListener('click', () => this.startRecording());
     document.getElementById('stopRecordingBtn').addEventListener('click', () => this.stopRecording());
@@ -96,10 +99,34 @@ class MeetingIntelligenceUI {
 
   async startRecording() {
     try {
-      // Get current tab
-      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+      // Get all tabs and find the most recent non-chrome page
+      const tabs = await chrome.tabs.query({ currentWindow: true });
 
-      // Start recording
+      // Filter out chrome:// and extension pages, sort by lastAccessed
+      const validTabs = tabs
+        .filter(t => t.url &&
+                     !t.url.startsWith('chrome://') &&
+                     !t.url.startsWith('chrome-extension://') &&
+                     !t.url.startsWith('edge://'))
+        .sort((a, b) => (b.lastAccessed || 0) - (a.lastAccessed || 0));
+
+      if (validTabs.length === 0) {
+        this.showStatus('No valid tabs found. Please open YouTube or any website in a new tab first.', 'error');
+        return;
+      }
+
+      const tab = validTabs[0]; // Most recently accessed valid tab
+
+      console.log('Starting recording for tab:', tab.id, tab.url, tab.title);
+
+      // First, send message to content script on that tab to "invoke" the extension
+      try {
+        await chrome.tabs.sendMessage(tab.id, { type: 'PREPARE_RECORDING' });
+      } catch (e) {
+        console.log('Content script not ready, continuing anyway:', e);
+      }
+
+      // Start recording via background script
       const response = await chrome.runtime.sendMessage({
         type: 'START_RECORDING',
         data: { tabId: tab.id, audioSource: 'tab' }
@@ -117,7 +144,9 @@ class MeetingIntelligenceUI {
         };
 
         this.updateRecordingUI(true);
-        this.showStatus('Recording started', 'success');
+        this.showStatus('Recording started for: ' + tab.title, 'success');
+      } else {
+        this.showStatus('Failed to start recording: ' + (response.error || 'Unknown error'), 'error');
       }
     } catch (error) {
       console.error('Error starting recording:', error);
@@ -480,6 +509,39 @@ class MeetingIntelligenceUI {
       .replace(/\n/g, '<br>')
       .replace(/^- (.+)/gm, '<li>$1</li>')
       .replace(/(<li>.*<\/li>)/s, '<ul>$1</ul>');
+  }
+
+  loadSampleTranscript() {
+    const sampleTranscript = `Meeting started at 2:00 PM on January 23rd, 2025.
+
+John opened the meeting discussing Q1 budget priorities. He emphasized we need to finalize all numbers by Friday, January 26th, to meet the board deadline.
+
+Sarah mentioned the financial reports are nearly complete. She committed to sending them to the team by Wednesday morning. The reports will include detailed breakdowns of marketing spend and ROI metrics.
+
+The team then discussed the new marketing campaign. After reviewing several options, everyone agreed to focus primarily on social media advertising, particularly LinkedIn and Instagram. Mike volunteered to create mockups for the new landing page by end of week.
+
+Jane raised important concerns about the aggressive timeline. She suggested we might need to bring in additional design resources to meet all deliverables. The team acknowledged this and agreed to revisit resource allocation.
+
+Next steps: Schedule a follow-up meeting next Monday, January 29th at 10:00 AM to review progress on all action items. John will send calendar invites.
+
+Meeting adjourned at 3:15 PM.`;
+
+    // Load into transcript
+    this.transcript = sampleTranscript;
+
+    const transcriptContent = document.getElementById('transcriptContent');
+    transcriptContent.innerHTML = `<p style="white-space: pre-wrap;">${sampleTranscript}</p>`;
+
+    // Create mock meeting
+    this.currentMeeting = {
+      title: 'Sample Meeting - Q1 Budget Planning',
+      startTime: Date.now(),
+      transcript: sampleTranscript,
+      summary: '',
+      actionItems: ''
+    };
+
+    this.showStatus('Sample transcript loaded! Try generating a summary or extracting action items.', 'success');
   }
 }
 
