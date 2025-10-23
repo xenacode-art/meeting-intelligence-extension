@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meeting Intelligence</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      width: 320px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      padding: 16px;
+      background: linear-gradient(135deg, #4285f4, #6c63ff);
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 13px;
+      opacity: 0.9;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: white;
+      color: #4285f4;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      margin-bottom: 12px;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn-secondary {
+      background: rgba(255, 255, 255, 0.2);
+      color: white;
+    }
+
+    .status {
+      font-size: 12px;
+      padding: 8px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 4px;
+      margin-top: 12px;
+    }
+
+    .feature-list {
+      text-align: left;
+      font-size: 12px;
+      margin: 16px 0;
+      padding: 12px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+    }
+
+    .feature-list li {
+      margin: 6px 0;
+      list-style-position: inside;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Meeting Intelligence</h1>
+    <p>AI-Powered Meeting Assistant</p>
+
+    <button id="openSidePanelBtn" class="btn">
+      Open Meeting Panel
+    </button>
+
+    <button id="quickRecordBtn" class="btn btn-secondary">
+      Quick Record
+    </button>
+
+    <div class="feature-list">
+      <strong>Features:</strong>
+      <ul>
+        <li>Live transcription</li>
+        <li>Smart summaries</li>
+        <li>Action item extraction</li>
+        <li>Multilingual support</li>
+        <li>Privacy-first (local AI)</li>
+      </ul>
+    </div>
+
+    <div id="status" class="status">
+      Powered by Chrome Built-in AI
+    </div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

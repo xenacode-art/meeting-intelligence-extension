@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meeting Intelligence</title>
+  <link rel="stylesheet" href="sidepanel.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-content">
+        <h1 class="title">Meeting Intelligence</h1>
+        <p class="subtitle">AI-Powered Meeting Assistant</p>
+      </div>
+      <div class="header-actions">
+        <button id="settingsBtn" class="icon-btn" title="Settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v6m0 6v6m-9-7h6m6 0h6"/>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- API Status -->
+    <div id="apiStatus" class="status-banner hidden">
+      <div class="status-content">
+        <span class="status-icon">⚠️</span>
+        <span class="status-text">Checking AI APIs...</span>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <!-- Recording Section -->
+      <section class="recording-section">
+        <div class="recording-header">
+          <h2>Current Meeting</h2>
+          <div id="recordingStatus" class="status-indicator">
+            <span class="status-dot"></span>
+            <span class="status-label">Ready</span>
+          </div>
+        </div>
+
+        <div class="recording-controls">
+          <button id="startRecordingBtn" class="btn btn-primary">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <circle cx="12" cy="12" r="8"/>
+            </svg>
+            Start Recording
+          </button>
+          <button id="stopRecordingBtn" class="btn btn-danger hidden">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <rect x="6" y="6" width="12" height="12"/>
+            </svg>
+            Stop Recording
+          </button>
+        </div>
+
+        <div class="meeting-info">
+          <input
+            type="text"
+            id="meetingTitle"
+            class="input"
+            placeholder="Meeting title (optional)"
+          />
+        </div>
+      </section>
+
+      <!-- Tabs -->
+      <div class="tabs">
+        <button class="tab active" data-tab="transcript">Transcript</button>
+        <button class="tab" data-tab="summary">Summary</button>
+        <button class="tab" data-tab="actions">Action Items</button>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="tab-content">
+        <!-- Transcript Tab -->
+        <div id="transcriptTab" class="tab-pane active">
+          <div class="content-header">
+            <h3>Live Transcript</h3>
+            <div class="content-actions">
+              <button id="copyTranscriptBtn" class="btn-small" title="Copy">
+                📋 Copy
+              </button>
+              <button id="translateTranscriptBtn" class="btn-small" title="Translate">
+                🌐 Translate
+              </button>
+            </div>
+          </div>
+          <div id="transcriptContent" class="content-box">
+            <p class="placeholder">Start recording to see transcript...</p>
+          </div>
+        </div>
+
+        <!-- Summary Tab -->
+        <div id="summaryTab" class="tab-pane">
+          <div class="content-header">
+            <h3>Meeting Summary</h3>
+            <div class="content-actions">
+              <select id="summaryType" class="select-small">
+                <option value="key-points">Key Points</option>
+                <option value="tldr">TL;DR</option>
+                <option value="headline">Headline</option>
+              </select>
+              <button id="generateSummaryBtn" class="btn-small">
+                ✨ Generate
+              </button>
+              <button id="copySummaryBtn" class="btn-small">
+                📋 Copy
+              </button>
+            </div>
+          </div>
+          <div id="summaryContent" class="content-box">
+            <p class="placeholder">Generate a summary from the transcript...</p>
+          </div>
+        </div>
+
+        <!-- Action Items Tab -->
+        <div id="actionsTab" class="tab-pane">
+          <div class="content-header">
+            <h3>Action Items</h3>
+            <div class="content-actions">
+              <button id="generateActionsBtn" class="btn-small">
+                ✨ Generate
+              </button>
+              <button id="copyActionsBtn" class="btn-small">
+                📋 Copy
+              </button>
+            </div>
+          </div>
+          <div id="actionsContent" class="content-box">
+            <p class="placeholder">Extract action items from the meeting...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Meeting History -->
+      <section class="history-section">
+        <div class="section-header">
+          <h2>Recent Meetings</h2>
+          <button id="clearHistoryBtn" class="btn-text">Clear All</button>
+        </div>
+        <div id="meetingsList" class="meetings-list">
+          <p class="placeholder">No meetings yet</p>
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Powered by Chrome Built-in AI (Gemini Nano)</p>
+      <p class="footer-note">All processing happens locally on your device</p>
+    </footer>
+  </div>
+
+  <!-- Settings Modal -->
+  <div id="settingsModal" class="modal hidden">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Settings</h2>
+        <button id="closeSettingsBtn" class="icon-btn">✕</button>
+      </div>
+      <div class="modal-body">
+        <div class="setting-group">
+          <label class="setting-label">
+            <input type="checkbox" id="autoTranscribe" checked>
+            Auto-transcribe during recording
+          </label>
+        </div>
+        <div class="setting-group">
+          <label class="setting-label">
+            <input type="checkbox" id="autoSave" checked>
+            Auto-save meetings
+          </label>
+        </div>
+        <div class="setting-group">
+          <label>Default Language</label>
+          <select id="defaultLanguage" class="input">
+            <option value="en">English</option>
+            <option value="es">Spanish</option>
+            <option value="ja">Japanese</option>
+          </select>
+        </div>
+        <div class="setting-group">
+          <label>Export/Import</label>
+          <button id="exportBtn" class="btn btn-secondary">Export Meetings</button>
+          <button id="importBtn" class="btn btn-secondary">Import Meetings</button>
+          <input type="file" id="importFile" accept=".json" class="hidden">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="sidepanel.js" type="module"></script>
+</body>
+</html>
