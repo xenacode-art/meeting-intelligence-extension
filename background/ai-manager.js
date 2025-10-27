@@ -185,7 +185,6 @@ export class AIManager {
   async summarize(text, options = {}) {
     // Fallback for when API is not available (demo mode)
     if (!this.summarizer) {
-      console.warn('Summarizer API not available, using demo fallback');
       return this.generateFallbackSummary(text, options);
     }
 
@@ -207,7 +206,6 @@ export class AIManager {
       const summary = await this.summarizer.summarize(text);
       return summary;
     } catch (error) {
-      console.error('Summarization error:', error);
       // Fallback to demo mode on error
       return this.generateFallbackSummary(text, options);
     }
@@ -246,7 +244,6 @@ export class AIManager {
   async extractActionItems(text) {
     // Fallback for when API is not available (demo mode)
     if (!this.writer) {
-      console.warn('Writer API not available, using demo fallback');
       return this.generateFallbackActionItems(text);
     }
 
@@ -259,7 +256,6 @@ export class AIManager {
 
       return actionItems;
     } catch (error) {
-      console.error('Action item extraction error:', error);
       // Fallback to demo mode on error
       return this.generateFallbackActionItems(text);
     }
