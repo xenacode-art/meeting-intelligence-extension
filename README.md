@@ -312,7 +312,7 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 - **Issues**: [GitHub Issues](https://github.com/yourusername/meeting-intelligence/issues)
 - **Feedback**: Submit via hackathon feedback form
-- **Twitter**: [@yourusername](https://twitter.com/yourusername)
+- **Twitter**: [@kajaobinna@gmail.com](https://twitter.com/xenacode)
 
 ---
 
