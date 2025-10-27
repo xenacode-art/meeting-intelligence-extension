@@ -311,7 +311,6 @@ MIT License - see [LICENSE](LICENSE) file for details
 ## 📞 Contact & Support
 
 - **Issues**: [GitHub Issues](https://github.com/yourusername/meeting-intelligence/issues)
-- **Feedback**: Submit via hackathon feedback form
 - **Twitter**: [@kajaobinna@gmail.com](https://twitter.com/xenacode)
 
 ---
